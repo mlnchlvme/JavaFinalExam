@@ -16,6 +16,8 @@ import java.util.Optional;
 @Repository
 public interface ViktorKimBorrowingRepository extends JpaRepository<ViktorKimBorrowing, Long> {
 
+   List<ViktorKimBorrowing> findByMemberId(Long memberId);
+
    Page<ViktorKimBorrowing> findByMemberId(Long memberId, Pageable pageable);
 
    Page<ViktorKimBorrowing> findByBookId(Long bookId, Pageable pageable);
@@ -33,6 +35,8 @@ public interface ViktorKimBorrowingRepository extends JpaRepository<ViktorKimBor
 
    @Query("SELECT b FROM ViktorKimBorrowing b WHERE b.status = 'ACTIVE' AND b.dueDate = :date")
    List<ViktorKimBorrowing> findDueOn(@Param("date") LocalDate date);
+
+   long countByStatus(BorrowingStatus status);
 
    long countByMemberIdAndStatus(Long memberId, BorrowingStatus status);
 }
